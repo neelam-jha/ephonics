@@ -1,0 +1,822 @@
+<!Doctype HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">    
+<style>    
+div {
+font-family: helvetica, sans-serif;;
+}
+
+.fs {
+font-size : 12px;    
+}
+
+#main{
+width:100vw;
+height:100vh;
+background:white;
+}
+
+#container {
+perspective: 1000px;
+transform-style: preserve-3d;
+box-shadow: 0 0 15px #999;
+background-image: linear-gradient(to left, #c8d9ff 0%, #c8d9ff 50%, transparent 50%, transparent 100%);
+background-size: 2px 100%;     
+position:absolute;
+top:10px;
+ border-top:    2px solid lightgray;
+  border-right:  3px solid lightgray; 
+  border-bottom: 2px solid lightgray;    
+}
+
+#bottombar {
+    position:absolute;
+    bottom:0.75em;
+    left:20px;
+}
+
+.table-contents{
+	font-size:1.2em;
+}
+
+.table-contents li{
+	list-style:none;
+	line-height:2em;
+}
+
+.table-contents span{
+	float:right;
+}
+
+.table-contents a{
+	float:left;
+	width:90%;
+	clear:both;
+	text-decoration:none;
+	margin:2px 0;
+	padding:0 10px;
+}
+
+.table-contents a:hover{
+	background:#CAD1EE;
+	clear:both;
+	text-decoration:none;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	-o-border-radius:10px;
+	-ms-border-radius:10px;
+	border-radius:10px;
+}
+
+ .book-content .capital,
+ .book-content .no-indent{
+	text-indent: 0;
+}
+
+
+
+.capital:first-letter {
+    display:block;
+    float:left;
+    font-size: 300%;
+    line-height: 70%;
+	margin-right: 6px;
+	margin-top: 7px;
+	margin-left:18px;
+}
+
+
+.cover{
+text-align:center;    
+}
+
+
+.page{
+width:100%;
+height:100%;
+position:absolute;
+transform-origin:0% 0%;
+animation-timing-function: ease-in;
+}
+
+.swipeLeft{
+animation: turn 1s forwards ;
+}
+
+.rotate{
+transform: rotate3d(0,1,0,-180deg);    
+}
+
+@keyframes turn {
+from { transform: rotate3d(0,,0,0,0deg); }
+ to { transform: rotate3d(0,1,0,-180deg); }
+}
+
+
+
+.swipeRight{
+animation: reTurn 0.5s forwards ;
+}
+
+
+.current{
+    
+}
+
+@keyframes reTurn {
+from { transform: rotate3d(0,1,0,-90deg); }
+ to { transform: rotate3d(0,0,0,0deg); }
+}
+
+tbody {
+text-align:center;    
+}
+
+.left{
+text-align:left;    
+}
+
+.none {
+  display: none;
+}
+
+.rounded {
+border-radius: 1.5em;    
+}
+
+.fh{
+height:80vh;   
+width:90vw;
+}
+
+.tc {
+display:table-cell; 
+padding-right:1em;
+}
+
+.tc div {
+}
+
+.vm{
+            vertical-align: middle;
+}
+.box {
+        border: 1px solid black;
+   border-collapse: collapse;
+}
+
+.pad2 {
+    padding:1em;
+width:90%;    
+}
+
+.center { 
+            text-align: center;
+        }
+        
+.vt{
+vertical-align:top;    
+}
+
+.book-content{
+font-size:1.2em;  
+}
+
+.book-content h1{
+padding-left:0.75em;    
+}
+
+.book-content table {
+padding-left:0.5em;  
+}
+
+.book-content div{
+padding-left:0.75em;    
+}
+
+
+.even{
+	background:-webkit-gradient(linear, right top, left top, color-stop(0.95, #ccccff), color-stop(1, #a3a8d4));
+	background-image:-webkit-linear-gradient(right, #ccccff 95%, #a3a8d4 100%);
+	background-image:-moz-linear-gradient(right, #ccccff 95%, #a3a8d4 100%);
+	background-image:-ms-linear-gradient(right, #ccccff 95%, #a3a8d4 100%);
+	background-image:-o-linear-gradient(right, #ccccff 95%, #a3a8d4 100%);
+	background-image:linear-gradient(right, #ccccff 95%, #a3a8d4 100%);
+}
+
+.odd{
+    
+	background:-webkit-gradient(linear, right top, left top, color-stop(0.95, #99e6e6), color-stop(1, #33cccc));
+	background-image:-webkit-linear-gradient(right, #99e6e6 95%, #33cccc 100%);
+	background-image:-moz-linear-gradient(right, #99e6e6 95%, #33cccc 100%);
+	background-image:-ms-linear-gradient(right, #99e6e6 95%, #33cccc 100%);
+	background-image:-o-linear-gradient(right, #99e6e6 95%, #33cccc 100%);
+	background-image:linear-gradient(right, #99e6e6 95%, #33cccc 100%);
+}
+
+.page-number{
+    padding-left: 0px;
+	color:black;
+	width:100%;
+	bottom:0.80em;
+	position:absolute;
+	display:block;
+	text-align: center;
+	line-height:1em;
+	font-size:1em;
+	background-image: linear-gradient(to right, #8080800f 25%, transparent 25% 90% , #8080800f 90% 100%);
+
+}
+
+#speak {
+}
+
+.play {
+position:absolute;
+top:14px;
+font-size:1.5em;    
+ background-color: #4CAF50; /* Green */
+ color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+    border-radius: 12px;
+    padding: 4px 20px 4px 20px;
+    box-shadow: 4px 4px black;
+    text-shadow: 2px 2px black;
+    border: 0px;
+    z-index:1000;
+ }
+ 
+.play:active{
+background-color:#419a44;
+padding: 3px 20px 5px 20px;
+    box-shadow: 2px 2px black;
+       text-shadow: 3px 3px black;
+    }
+.stop {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin-left: 1em;
+  cursor: pointer;
+  font-size: inherit;
+    border-radius: 12px;
+    padding: 4px 20px 4px 20px;
+    box-shadow: 4px 4px black;
+    text-shadow: 2px 2px black;
+    border: 0px;
+  animation-name: colorChange;
+  animation-duration: 0.5s; 
+  animation-timing-function: ease-out; 
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-fill-mode: none;
+  animation-play-state: running;
+ }
+ 
+ @keyframes colorChange {
+  0% {
+    color: white;
+  }
+  50% {
+    color: gray;
+  }
+  100% {
+    color: black;
+  }
+}
+
+
+</style>    
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="js/zing.min.js"></script>
+<script src="js/nosleep.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
+
+</head>    
+<body>
+<div id="main" class="books">
+<div id="container" class="book">
+
+</div>    
+<div id="bottombar">
+<small id="msg"> </small><small>E Phonics (C) Neelam 2020 </small>
+</div>
+
+</div>    
+<script>
+
+
+var book={};
+book.pages=57;
+book.thick=10;
+book.shift=book.thick/book.pages;
+book.div=[];
+book.currentPage=0;
+book.location=location.hash;
+const container=document.getElementById("container");
+book.path="book/pages/"
+// Added New
+
+var listening=false;
+var speak= false;
+var pages=[];
+
+
+function fullScreen(e) {
+var element=document.getElementById("main");    
+  if(element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if(element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if(element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+  } else if(element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  }
+}
+
+cookie= {
+set:function (cname, cvalue, exdays) {
+  var d = new Date();
+  var exdays=exdays||30;
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  var expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+},
+
+get:function (cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+}
+
+function checkBook(){
+var a=getCurrentPage();    
+var b=cookie.get("currentPage");
+if (a==b)console.log("Same Page");
+var rotate=document.getElementsByClassName("rotate");
+console.log(rotate.length+" pages on left");
+var below=document.getElementsByClassName("current");
+console.log(below.length +" pages on right")
+console.log(parseInt(below[0].id));
+}
+
+function sizing(){
+var w=screen.width-book.thick-10;
+var h=(screen.height>400)?screen.height-100:screen.height-20;
+if (h<400){document.getElementById("main").classList.add("fs");
+} else {
+document.getElementById("main").classList.remove("fs")    
+} 
+w= (w>400)?400:w;
+book.w=w;
+book.h=h;
+var div;
+container.setAttribute("style","width:"+(w+book.thick)+"px;height:"+h+"px");
+book.style.innerHTML=".hw {height:"+h+"px; width:"+w+"px}" 
+gsap.to(book.button,{x:(w-70),duration:0.1});
+}
+
+function createBook(n){
+var button=document.createElement("button");
+button.id="speak"
+button.classList.add("play");
+button.innerHTML='<i class="fa fa-bullhorn" aria-hidden="true"></i>';
+book.button=button;    
+book.style = document.createElement("style");
+document.head.appendChild(book.style);
+sizing();
+for (var i=1;i<book.pages;i++){
+div = document.createElement("div");
+console.log(div);
+div.classList.add("hw");
+div.classList.add("page");
+div.id=i+"-page";
+if (i % 2 == 0){
+div.classList.add("even");
+} else {
+div.classList.add("odd");
+}
+
+div.classList.add("current");
+
+container.appendChild(div);
+
+pages.push(div);
+gsap.to(div, {x:i*book.thick/book.pages,zIndex:(book.pages-i), duration: 0.1});
+}
+
+pages[0].classList.add("cover");
+
+var p=$(".page");    
+
+p.each(function( index ) {
+$(this).load(book.path+'page' + (index+1) + '.html?'+Math.random());    
+});
+
+
+
+jumpPage(n);
+}
+
+
+
+function jumpPage(n){
+//rotate n-5 pages
+//remove pages< n+5
+//remove page <n-5
+n=(n>book.pages-2)?book.pages-2:n;    
+for (i=0;i<n;i++){
+if (pages[i]){    
+pages[i].classList.remove("current");
+gsap.to(pages[i], {rotateY:-180,zIndex:i, duration: 0.1});
+}
+}
+//sanitize next all pages
+for (i=n;i<book.pages;i++){
+if (pages[i]){pages[i].classList.remove("rotate");
+pages[i].classList.add("current");
+gsap.to(pages[i], {rotateY:0,zIndex:(book.pages-i), duration: 0.1});
+}
+}
+
+
+for (i=n-5;i>-1;i--){
+if (pages[i])if (pages[i].parentNode)container.removeChild(pages[i]);    
+}
+
+for (i=n+5;i<book.pages;i++){
+if (pages[i])if(pages[i].parentNode)container.removeChild(pages[i]);    
+}
+
+for (i=n-4;i<n+5;i++){
+//console.log("Page Order "+i);    
+if (pages[i])container.appendChild(pages[i]);    
+}
+
+book.currentPage=n;
+}
+
+
+function getCurrentPage(){
+var index=false;    
+ for (i = 0; i < pages.length; i++) {
+if (pages[i].classList.contains("current")){index=i;break};     
+}
+return index    
+}
+
+
+function gotoPageNo(n){
+var d=n-book.currentPage;
+var dir=(d>0)?1:-1;
+d=Math.abs(d);
+for (var i=0;i<d;i++){
+setTimeout(function(){shiftPage(dir)},300*i)
+}
+}
+
+
+function shiftPage(dir){
+/*
+swipeleft   
+turn current -180 
+remove -5 
+add +5 
+swiperight  
+turn prev 0  
+remove +5
+add -5
+*/
+
+    
+if (!isNaN(dir))dir=(dir>0)?"swipeLeft":"swipeRight";    
+console.log(dir);
+var index = book.currentPage;
+var index2=getCurrentPage();
+if (index!=index2){
+console.log("ERROR");    
+}
+if (pageSpeak)pageStop();
+var next=(index<pages.length)?pages[index+1]:false;
+var prev=(index>0)?pages[index-1]:false;
+
+if (dir=="swipeLeft") {
+if (next){    
+pages[index].classList.remove("current");
+    
+gsap.to(pages[index], {rotateY:-180, ease: "circ.out", duration: 2});
+gsap.to(pages[index], {zIndex:i,duration:0.01});
+
+
+if (pages[index+5]){
+container.appendChild(pages[index+5]);}
+if (pages[index-5]){
+if (pages[index-5].parentNode)container.removeChild(pages[index-5]);}
+book.currentPage++;
+}
+}
+else {
+if (prev){    
+gsap.to(prev,{zIndex:(book.pages-index+1),duration:0.001 });    
+gsap.to(prev, {rotateY:0, ease: "circ.out", duration: 0.5});
+prev.classList.add("current");
+if (pages[index+4]){
+if (pages[index+4].parentNode)container.removeChild(pages[index+4]);}
+
+if (pages[index-5]){
+if (pages[index-4].parentNode){
+container.insertBefore(pages[index-5],pages[index-4])    
+}    
+}    
+(book.currentPage>0)?book.currentPage--:0;
+}
+}
+console.log(book.currentPage);
+cookie.set("currentPage",book.currentPage);
+var a=getCurrentPage();
+if (a!=book.currentPage)console.log("error");
+}
+
+function updateHash(n){
+location.hash="page/"+n    
+}
+
+function setTouch(){
+var zt = new ZingTouch.Region(document.body);
+var delay=200;
+var time=function(){ return new Date().getTime()};
+var stime=time();
+var ltime=time();
+var myElement = document.getElementById('main');
+var myRegion = new ZingTouch.Region(myElement);
+var chainableObject = myRegion.bind(myElement);
+
+chainableObject
+	.tap(function(e){
+		console.log(e.detail);
+		fullScreen();
+		
+	})
+
+var myElement = document.getElementById('container');
+var myRegion = new ZingTouch.Region(myElement);
+var chainableObject = myRegion.bind(myElement);
+chainableObject
+	.tap(function(e){
+var href=e.detail.events[0].originalEvent.target.getAttribute("href");	    
+if (href==null || href==undefined){	    
+if (e.detail.events[0].x<book.w/4){shiftPage("swipeRight")} else 
+if (e.detail.events[0].x>book.w*0.90){
+console.log((e.detail.events[0].y-container.offsetTop) + " / "+container.offsetHeight+ " "+Math.round(100*(e.detail.events[0].y-container.offsetTop)/container.offsetHeight));
+
+jumpPage(Math.round(book.pages*(e.detail.events[0].y-container.offsetTop)/container.offsetHeight))    
+
+}else
+if (e.detail.events[0].x>window.innerWidth*0.75)
+{
+shiftPage("swipeLeft");    
+}
+} else {
+jumpPage(parseInt(href.slice(6))-1)
+} 
+	})
+	.pan(function(e){
+	if (time()-ltime>delay){
+	if (e.detail.data[0].change.x!=0){   
+	   		ltime=time();
+	shiftPage((e.detail.data[0].change.x<0)?"swipeLeft":"swipeRight");	
+}
+	}
+	 
+	}, true)
+	
+}
+
+
+
+
+function tableToArray(tbl, opt_cellValueGetter) {
+  opt_cellValueGetter = opt_cellValueGetter || function(td) { return td.textContent || td.innerText; };
+  var twoD = [];
+  for (var rowCount = tbl.rows.length, rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+    twoD.push([]);
+  }
+  for (var rowIndex = 0, tr; rowIndex < rowCount; rowIndex++) {
+    var tr = tbl.rows[rowIndex];
+    for (var colIndex = 0, colCount = tr.cells.length, offset = 0; colIndex < colCount; colIndex++) {
+      var td = tr.cells[colIndex], text = opt_cellValueGetter(td, colIndex, rowIndex, tbl);
+      while (twoD[rowIndex].hasOwnProperty(colIndex + offset)) {
+        offset++;
+      }
+      for (var i = 0, colSpan = parseInt(td.colSpan, 10) || 1; i < colSpan; i++) {
+        for (var j = 0, rowSpan = parseInt(td.rowSpan, 10) || 1; j < rowSpan; j++) {
+          twoD[rowIndex + j][colIndex + offset + i] = text;
+        }
+      }
+    }
+  }
+  return twoD;
+}
+
+function transpose(a)
+{
+  return a[0].map(function (_, c) { return a.map(function (r) { return r[c]; }); });
+  // or in more modern dialect
+  // return a[0].map((_, c) => a.map(r => r[c]));
+}
+
+function speech() {
+var t=this;    
+var msg= new SpeechSynthesisUtterance();
+	msg.volume = 1;
+	msg.rate = 0.8;
+	msg.pitch = 1.2;
+t.msg=msg;  
+t.say=say;
+t.voices=voices;
+t.stop=stop;
+t.delay=750;
+t.speed=speed;
+var list=[];
+t.list=list;
+
+var qu=[];
+t.qu=qu;
+
+function speed(x){
+t.delay+=x    
+console.log("delay changed by +"+x)
+}
+
+function voices(){
+return speechSynthesis.getVoices()    
+}
+function stop(){
+qu.splice(0,qu.length);    
+}
+function say(a){
+console.log(a);    
+if (a.text){
+speechSynthesis.cancel();    
+if (a.type=="word"){
+var b=a.text.split(/[,\s]/g);    
+
+for (var i=0;i<b.length;i++){
+if (!b[i].search(/\b(\w+)\b/))qu.push(b[i]);    
+}
+
+} else {    
+var b=(a.text.split("."));    
+for (var i=0;i<b.length;i++){
+    qu.push(b[i]);
+}    
+
+}
+}
+
+  msg.text = qu[0];
+if (msg.text=="undefined")msg.text="";  
+list.push(msg.text);
+console.log(msg.text);
+
+$( "td:contains('"+msg.text+"')" ).css( "background-color", "yellow" );
+
+msg.onend = function(event) {
+$( "td:contains('"+msg.text+"')" ).css( "background-color", "" );
+    console.log('Utterance has finished being spoken after ' + event.elapsedTime + ' milliseconds.');
+if (qu.length==1){
+if (pageSpeak){    
+pageStop();    
+}
+}    
+    qu.shift();
+
+if (qu.length>0){
+setTimeout(
+function(){    
+console.log("delay ="+t.delay);
+say({text:false,type:false});
+},t.delay);
+}
+
+  }
+window.speechSynthesis.speak(msg);
+} 
+  window.speechSynthesis.onerror = function(event) {
+    console.error('An error has occurred with the speech synthesis: ' + event.error);
+  }
+  }
+
+
+function pageStop(){
+speak.stop();
+pageSpeak=false;
+var button=document.getElementById("speak");
+button.classList.remove("stop");
+}
+
+function speakSelection(){
+var text=window.getSelection();
+if (text)text=text.toString();
+if (pageSpeak)pageStop(pageSpeak);
+if (!speak.msg.voice)speak.msg.voice=speak.voices()[3];
+if (text){
+    speak.stop();
+    speak.say({text:text,cancel:true,type:"sentense"});
+}
+}
+
+var pageSpeak=false;
+if (!speak)speak= new speech();
+
+function speakPage(n){
+console.log(n);    
+if (!speak.msg.voice)speak.msg.voice=speak.voices()[3];
+var p=pages[n-1];    
+var t=p.getElementsByTagName("table");
+if (t.length>0){
+var a=tableToArray(t[0]);
+if (t[0].classList.contains("simple")){
+var b=a;    
+} else {
+var b=transpose(a);
+}
+speak.stop();
+speak.say({text:b.join(","),cancel:true,type:"word"})
+} else {
+speak.stop();
+speak.say({text:p.innerText,cancel:true,type:"sentence"})
+} 
+
+}
+
+
+
+function speakButton(){
+var button=book.button;    
+var myRegion = new ZingTouch.Region(button);
+var chainableObject = myRegion.bind(button);
+
+chainableObject
+	.tap(function(e){
+	    if (!pageSpeak){    
+button.classList.add("stop");
+pageSpeak=getCurrentPage()+1;
+speakPage(pageSpeak);
+} else {
+pageStop();    
+}
+	    
+	})
+document.getElementById("main").appendChild(button);    
+}
+
+
+
+function init(){
+setTouch();
+var n=parseInt(cookie.get("currentPage"));
+if (isNaN(n))n=0;
+createBook(n);
+speakButton();
+checkBook();
+}
+init();
+
+var noSleep = new NoSleep();
+
+function enableNoSleep() {
+  noSleep.enable();
+  document.removeEventListener('touchstart', enableNoSleep, false);
+}
+
+// Enable wake lock.
+// (must be wrapped in a user input event handler e.g. a mouse or touch handler)
+document.addEventListener('touchstart', enableNoSleep, false);	
+window.addEventListener("resize", sizing);	
+</script>    
+</body>    
+
+</html>
