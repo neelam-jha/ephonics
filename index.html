@@ -37,6 +37,9 @@ top:10px;
     left:20px;
 }
 
+.tran{
+color:transparent;    
+}
 .table-contents{
 	font-size:1.2em;
 }
@@ -686,15 +689,16 @@ if (a.type=="word"){
 var b=a.text.split(/[,\s]/g);    
 
 for (var i=0;i<b.length;i++){
-if (!b[i].search(/\b(\w+)\b/))qu.push(b[i]);    
+if (!b[i].search(/\b(\w+)\b/)){
+console.log(b[i])    
+qu.push(b[i]);}    
 }
 
 } else {    
 var b=(a.text.split("."));    
 for (var i=0;i<b.length;i++){
-    qu.push(b[i]);
+    qu.push(b[i].replace(/#\d/gi,""));
 }    
-
 }
 }
 
