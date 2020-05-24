@@ -39,7 +39,10 @@ top:10px;
 
 .tran{
 color:transparent;    
+font-size:0px;    
 }
+
+
 .table-contents{
 	font-size:1.2em;
 }
@@ -387,6 +390,10 @@ console.log(below.length +" pages on right")
 console.log(parseInt(below[0].id));
 }
 
+function isFullScreen(){
+return (screen.height-window.innerHeight<30)?true:false;    
+}
+
 function sizing(){
 var w=screen.width-book.thick-10;
 var h=(screen.height>400)?screen.height-100:screen.height-20;
@@ -476,7 +483,6 @@ if (pages[i])if(pages[i].parentNode)container.removeChild(pages[i]);
 }
 
 for (i=n-4;i<n+5;i++){
-//console.log("Page Order "+i);    
 if (pages[i])container.appendChild(pages[i]);    
 }
 
@@ -602,6 +608,7 @@ jumpPage(parseInt(href.slice(6))-1)
 } 
 	})
 	.pan(function(e){
+	 if (!isFullScreen())fullScreen;   
 	if (time()-ltime>delay){
 	if (e.detail.events[0].x>book.w*0.95){
 console.log((e.detail.events[0].y-container.offsetTop) + " / "+container.offsetHeight+ " "+Math.round(100*(e.detail.events[0].y-container.offsetTop)/container.offsetHeight));
@@ -680,7 +687,9 @@ return speechSynthesis.getVoices()
 }
 function stop(){
 qu.splice(0,qu.length);    
+
 }
+
 function say(a){
 console.log(a);    
 if (a.text){
@@ -738,6 +747,7 @@ window.speechSynthesis.speak(msg);
 
 function pageStop(){
 speak.stop();
+window.speechSynthesis.cancel();
 pageSpeak=false;
 var button=document.getElementById("speak");
 button.classList.remove("stop");
