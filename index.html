@@ -695,18 +695,20 @@ console.log(a);
 if (a.text){
 speechSynthesis.cancel();    
 if (a.type=="word"){
-var b=a.text.split(/[,\s]/g);    
+a.text=a.text.replace(/#\d/gi,"");
+    
+var b=a.text.split(/[,\s]/);    
 
 for (var i=0;i<b.length;i++){
 if (!b[i].search(/\b(\w+)\b/)){
-console.log(b[i])    
 qu.push(b[i]);}    
 }
 
 } else {    
-var b=(a.text.split("."));    
+var b=(a.text.split("."));
+b=b.replace(/#\d/gi,"");
 for (var i=0;i<b.length;i++){
-    qu.push(b[i].replace(/#\d/gi,""));
+    qu.push(b[i]);
 }    
 }
 }
